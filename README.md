@@ -28,7 +28,33 @@ To formulate a C program to convert a decimal number into its binary equivalent 
 ### Step 8: 
    Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    int num, rem, binary[50], i = 0, k;
+
+    printf("Enter a decimal number: ");
+    scanf("%d", &num);
+
+    while(num > 0) {
+        rem = num % 2;
+        binary[i] = rem;
+        i++;
+        num = num / 2;
+    }
+
+    printf("Binary Equivalent: ");
+    for(k = i - 1; k >= 0; k--) {
+        printf("%d", binary[k]);
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="400" height="201" alt="image" src="https://github.com/user-attachments/assets/35a0b120-4e63-407e-b55c-d56358ec1782" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -67,7 +93,68 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    int i, j, k, m, min, max, saddleFound = 0;
+
+    printf("Enter the order of the matrix: ");
+    scanf("%d", &m);
+
+    int a[m][m];
+
+    printf("Enter the elements of the matrix:\n");
+    for(i = 0; i < m; i++) {
+        for(j = 0; j < m; j++) {
+            scanf("%d", &a[i][j]);
+        }
+    }
+
+    printf("\nMatrix:\n");
+    for(i = 0; i < m; i++) {
+        for(j = 0; j < m; j++) {
+            printf("%d ", a[i][j]);
+        }
+        printf("\n");
+    }
+
+    for(i = 0; i < m; i++) {
+        min = a[i][0];
+        int colIndex = 0;
+
+        for(j = 1; j < m; j++) {
+            if(a[i][j] < min) {
+                min = a[i][j];
+                colIndex = j;
+            }
+        }
+
+        max = a[0][colIndex];
+        int rowIndex = 0;
+
+        for(k = 1; k < m; k++) {
+            if(a[k][colIndex] > max) {
+                max = a[k][colIndex];
+                rowIndex = k;
+            }
+        }
+
+        if(min == max && rowIndex == i) {
+            printf("\nSaddle Point Found: %d at position (%d, %d)\n", min, i, colIndex);
+            saddleFound = 1;
+        }
+    }
+
+    if(!saddleFound)
+        printf("\nNo Saddle Point Found.\n");
+
+    return 0;
+}
+```
 # Output:
+<img width="458" height="671" alt="image" src="https://github.com/user-attachments/assets/a41d465d-3f38-437e-b0c5-58ccab0a75f2" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -101,7 +188,35 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    char s[100], d[100];
+    int i, j = 0, length = 0;
+
+    printf("Enter a string: ");
+    scanf("%[^\n]s", s);
+
+    while(s[length] != '\0') {
+        length++;
+    }
+
+    for(i = length - 1; i >= 0; i--) {
+        d[j] = s[i];
+        j++;
+    }
+
+    d[j] = '\0';
+
+    printf("Reversed string: %s", d);
+
+    return 0;
+}
+```
 # Output:
+<img width="397" height="226" alt="image" src="https://github.com/user-attachments/assets/8bd7fd55-4b09-44e8-b146-6665c3bd0442" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -135,7 +250,38 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8:
   Stop
 # Program:
+```
+#include <string.h>
+
+int main() {
+    char s[100];
+    int visited[256] = {0};
+    int i, j, n, count;
+
+    printf("Enter a string: ");
+    scanf("%[^\n]", s);
+
+    n = strlen(s);
+
+    for(i = 0; i < n; i++) {
+        if(visited[(unsigned char)s[i]] == 0) {
+            count = 1;
+            for(j = i + 1; j < n; j++) {
+                if(s[i] == s[j]) {
+                    count++;
+                }
+            }
+            printf("Character %c frequency = %d\n", s[i], count);
+            visited[(unsigned char)s[i]] = 1;
+        }
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="497" height="588" alt="image" src="https://github.com/user-attachments/assets/beb4a390-65d4-46e1-b5a5-865686516b2a" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -169,7 +315,57 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    char str[200], words[50][50];
+    int i, j, k = 0, row = 0, col = 0;
+
+    printf("Enter a string: ");
+    scanf("%[^\n]s", str);
+
+    for(i = 0; str[i] != '\0'; i++) {
+        if(str[i] == ' ') {
+            words[row][col] = '\0';
+            row++;
+            col = 0;
+        } else {
+            words[row][col++] = str[i];
+        }
+    }
+    words[row][col] = '\0';
+    row++;
+
+    for(i = 0; i < row; i++) {
+        for(j = i + 1; j < row; j++) {
+            int flag = 1, p = 0;
+            while(words[i][p] != '\0' || words[j][p] != '\0') {
+                if(words[i][p] != words[j][p]) {
+                    flag = 0;
+                    break;
+                }
+                p++;
+            }
+            if(flag == 1) {
+                words[j][0] = '\0';
+            }
+        }
+    }
+
+    printf("Unique words: ");
+    for(i = 0; i < row; i++) {
+        if(words[i][0] != '\0') {
+            printf("%s ", words[i]);
+        }
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="493" height="199" alt="image" src="https://github.com/user-attachments/assets/bff8b1d0-3fa6-4c3a-9701-7a951bb63bcf" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
